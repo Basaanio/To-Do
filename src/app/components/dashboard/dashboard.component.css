@@ -1,0 +1,157 @@
+.calendar-container {
+  margin: 2rem;
+  padding-top: 6rem;
+}
+
+.calendar-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-pagination {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between; /* Spread arrows to the left and right sides */
+  align-items: center;
+  font-size: 2rem; /* Increase the size of the arrows */
+}
+
+.pagination-button {
+  background: none;
+  border: none;
+  font-size: 2rem; /* Bigger font size for arrows */
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.month-year {
+  font-size: 1.5rem;
+  margin: 0 1rem;
+}
+
+.pagination-button:hover {
+  color: #007bff; /* Add a hover effect */
+}
+
+
+.calendar-grid {
+  display: grid;
+  gap: 5px; /* Reduce gap between rows */
+}
+
+.calendar-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 3px; /* Reduce gap between columns */
+  margin-bottom: 0.5rem; /* Decrease space between rows */
+}
+
+.day-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date {
+  font-size: 1.5rem; /* Larger font for the date */
+  font-weight: bold;
+  margin: 0; /* Remove margin to reduce space */
+  padding: 0.2rem 0; /* Add a small padding */
+}
+
+.day-name {
+  font-size: 1rem; /* Smaller font for the day */
+  margin: 0; /* Remove margin */
+  padding: 0.1rem 0; /* Add a small padding */
+}
+
+.separator {
+  margin: 0; /* Remove margin */
+  padding: 0.1rem 0; /* Add minimal padding */
+}
+
+.task-list {
+  display: grid; /* Use grid for uniformity */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ensure responsive behavior */
+  gap: 1rem; /* Space between cards */
+}
+
+/* .task-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 3rem; 
+  background: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem; 
+  font-size: 0.9rem; 
+} 
+  
+
+
+.task-title {
+  font-size: 1.1rem; 
+  font-weight: bold;
+}
+
+.task-description {
+  margin: 0.3rem 0;
+}
+
+*/
+
+.task-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+  background: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  font-size: 0.9rem;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px;
+  height: 200px;
+  transition: box-shadow 0.2s ease;
+  position: relative;
+}
+
+.task-title {
+  font-size: 1.1rem; /* Keep this size */
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* Ensure consistent spacing */
+}
+
+.task-description {
+  margin: 0.3rem 0; /* Keep reduced space between title and description */
+}
+
+
+.task-card p {
+  margin: 0; /* Remove default margins from paragraphs */
+  padding: 0.1rem 0; /* Add minimal padding */
+}
+
+.task-card:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Slightly larger shadow on hover */
+  transition: box-shadow 0.2s ease; /* Smooth transition */
+}
+
+
+
+.blur-background {
+  filter: blur(5px); /* Adjust blur intensity as needed */
+  pointer-events: none; /* Prevent interaction with the blurred content */
+}
+
+.greeting-section {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.5rem;
+}
+
+.greeting-section p {
+  margin: 0;
+  padding: 5px;
+}

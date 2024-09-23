@@ -1,0 +1,43 @@
+/* Add this to your global styles.css or a specific component stylesheet
+
+/* Card Styling */
+.card {
+    border-radius: 15px;
+    border: none;
+    background-color: #f8f9fa;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #343a40;
+}
+
+/* Form Control Styling */
+.form-control {
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid #ced4da;
+}
+
+/* Invalid Feedback Styling */
+.invalid-feedback {
+    display: block;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+    padding: 0.75rem 1.25rem;
+}
+
+.btn-primary:disabled {
+    background-color: #007bff;
+    opacity: 0.65;
+    cursor: not-allowed;
+} 

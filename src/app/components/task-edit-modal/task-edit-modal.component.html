@@ -1,0 +1,45 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+      <h2>Edit Task</h2>
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label>Title</label>
+          <input formControlName="title" required />
+        </div>
+        <div>
+          <label>Description</label>
+          <textarea formControlName="description"></textarea>
+        </div>
+        <div>
+          <label>Due Date</label>
+          <input type="datetime-local" formControlName="dueDate" required />
+        </div>
+        <div>
+          <label>Priority</label>
+          <select formControlName="priority" required>
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+          </select>
+        </div>
+        <div>
+          <label>Status</label>
+          <select formControlName="status" required>
+            <option value="PENDING">Pending</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="IN_PROGRESS">In Progress</option>
+          </select>
+        </div>
+
+      <div *ngIf="collaboratorUsernames.length > 0">
+        <label>Collaborator Usernames</label>
+        <input type="text" [value]="collaboratorUsernames.join(', ')" readonly />
+      </div>
+      
+        
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>     
+       </form>
+    </div>
+  </div>
+  

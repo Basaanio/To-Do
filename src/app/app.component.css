@@ -1,0 +1,101 @@
+.task-form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 400px;
+  display: block; /* Make sure it is visible */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+input, textarea, select {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #80bdff;
+  outline: none;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 0.875em;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+/* Main Content */
+.main-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 250px; /* Sidebar width */
+}
+
+.main-content.shifted {
+  margin-left: 0; /* When sidebar is closed */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  transition: transform 0.3s ease;
+  transform: translateX(0); /* Default open */
+  z-index: 1050;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%); /* Hide off-screen */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Adjust width for smaller screens */
+  }
+  
+  .main-content {
+    margin-left: 0; /* Reset margin for small screens */
+  }
+
+  .main-content.shifted {
+    margin-left: 200px; /* Adjusted margin when sidebar is open */
+  }
+
+  .task-form-container {
+    width: 90%; /* Full width on smaller screens */
+    max-width: 400px; /* Maximum width */
+  }
+}

@@ -1,0 +1,87 @@
+<div class="calendar-container">
+  <div class="greeting-section">
+    <p>{{ currentDate }}</p>
+    <p>{{ greetingMessage }}, {{ authService.userProfile.userLoginDTO.username }}</p>
+  </div>
+  <hr>
+
+
+
+  <div class="calendar-pagination">
+    <button (click)="previousPage()" class="pagination-button" [disabled]="currentPage === 1">&larr;</button> 
+    <span class="month-year">{{ currentMonth }}</span>
+    <button (click)="nextPage()" class="pagination-button" [disabled]="currentPage === totalPages">&rarr;</button> 
+  </div>
+
+  <div class="calendar-grid">
+    <!-- Displaying Dates -->
+    <div class="calendar-row dates-row">
+      <div class="day-column" *ngFor="let date of paginatedDates">
+        <div class="date"><h1>{{ getFormattedDate(date) }}</h1></div>
+      </div>
+    </div>
+    
+    <!-- Displaying Day Names -->
+    <div class="calendar-row days-row">
+      <div class="day-column" *ngFor="let date of paginatedDates">
+        <div class="day-name">{{ getDayOfWeek(date) }}</div>
+      </div>
+    </div>
+    
+    <!-- Separator Row -->
+    <div class="calendar-row separator-row">
+      <div class="day-column" *ngFor="let date of paginatedDates">
+        <div class="separator">|</div>
+      </div>
+    </div>
+
+    
+    
+<!-- Displaying Tasks -->
+
+<div class="calendar-row task-data-row">
+  <div class="day-column" *ngFor="let date of paginatedDates">
+    <div class="task-list">
+      <div class="task-card" *ngFor="let task of filtereTasks[date]" 
+           (click)="openEditModal(task)"
+           [ngStyle]="{'background-color': task.isCollaborative ? '#C7DBF2' : '#F2DAEF'}"> 
+
+        <!-- Icon Container -->
+        <div class="icon-container">
+          <i *ngIf="!task.isCollaborative" class="bi bi-person-fill" aria-hidden="true"></i> <!-- Regular Task Icon -->
+          <i *ngIf="task.isCollaborative" class="bi bi-people-fill" aria-hidden="true"></i> <!-- Collaborative Task Icon -->
+        </div>
+ 
+        <span class="badge rounded-pill" 
+        [ngClass]="{
+          'bg-primary': task.status === 'PENDING', 
+          'bg-success': task.status === 'COMPLETED', 
+          'bg-warning': task.status === 'IN_PROGRESS',
+        }" 
+        style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+    {{ task.status }}
+  </span>
+
+
+        <h3 class="task-title">{{ task.title }}</h3>
+        <p class="task-description">{{ task.description }}</p>
+        <p><strong>Priority:</strong> {{ task.priority }}</p>
+        <p><strong>Time:</strong> {{ getFormattedTime(task.dueDate) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Task Form -->
+    <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded()"></app-task-form>
+    
+    <app-task-edit-modal 
+      *ngIf="isModalOpen" 
+      [task]="selectedTask!" 
+      (close)="closeModal($event)">
+    </app-task-edit-modal>
+  </div>
+</div>
+
+

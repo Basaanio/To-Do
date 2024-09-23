@@ -1,0 +1,148 @@
+/* Navbar Styles */
+.navbar {
+  background-color: #007bff; /* Bootstrap primary color */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+/* Navbar brand styles */
+.navbar-brand {
+  color: #ffffff; /* White color for brand text */
+}
+
+.navbar-brand:hover {
+  color: #d3d3d3; /* Light gray color on hover */
+}
+
+
+/* Nav link styles */
+.navbar-nav .nav-link {
+  color: #ffffff; /* White color for nav links */
+}
+
+.navbar-nav .nav-link.active {
+  color: #ffc107; /* Yellow color for the active link */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #d3d3d3; /* Light gray color on hover */
+}
+
+/* Dropdown menu styles */
+.navbar-nav .dropdown-menu {
+  background-color: #343a40; /* Dark background for dropdown menu */
+  border: 1px solid #454d55; /* Lighter border color */
+}
+
+.navbar-nav .dropdown-item {
+  color: #ffffff; /* White color for dropdown items */
+}
+
+.navbar-nav .dropdown-item:hover {
+  background-color: #495057; /* Darker background on hover */
+  color: #ffffff; /* White color on hover */
+}
+
+.navbar-nav .dropdown-divider {
+  background-color: #495057; /* Darker color for the divider */
+}
+
+/* Search input styles */
+.form-control {
+  border-radius: 0; /* Remove border radius for uniformity */
+}
+
+.btn-secondary {
+  border-radius: 0; /* Remove border radius for uniformity */
+}
+
+/* Toggle button styles */
+.navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;base64,...'); /* Customize the icon */
+}
+
+/* Navbar collapses on smaller screens */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: #007bff; /* Match the background color when collapsed */
+  }
+}
+
+/* Search container styles */
+.search-container {
+  flex-grow: 1; /* Take available space */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+}
+
+.search-bar {
+  border-radius: 5px; /* Optional: Rounded corners */
+  padding: 5px; /* Add some padding */
+  width: 300px; /* Set a width for the input */
+  max-width: 100%; /* Ensure it doesn't overflow */
+}
+.navbar-nav {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.navbar-nav.ms-auto {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+/* Content styles */
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {
+  padding: 1rem;
+}
+
+/* Sidenav styles */
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  padding-top: 3.5rem; /* Account for the fixed toolbar */
+  transition: width 0.3s ease;
+}
+
+
+@media screen and (min-width: 600px) {
+  mat-sidenav {
+    padding-top: 4rem; /* Adjust padding for larger screens */
+  }
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+}
+
+mat-sidenav-content {
+  padding: 0; /* Remove any padding */
+  margin: 0;   /* Account for the fixed toolbar */
+}
+
+/* @media screen and (min-width: 600px) {
+  mat-sidenav-content {
+    padding-top: 4rem; 
+  } */
+
+
+/* Expanded sidebar style */
+.expanded {
+  width: 250px;   
+}

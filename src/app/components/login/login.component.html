@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="card shadow-sm">
+              <div class="card-body">
+                  <h3 class="card-title mb-4 text-center">Login</h3>
+                  <form [formGroup]="loginForm" (ngSubmit)="signInOnSubmit()">
+
+
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Email address</label>
+                          <input type="email" class="form-control" [class.is-valid]="email.valid && email.dirty"
+                          [class.is-invalid]="email.invalid && email.dirty"
+                          id="email" [formControl]="email">
+                          <div *ngIf="email.invalid && email.dirty" class="invalid-feedback d-block">
+                              <span *ngIf="email.dirty && email.errors?.['required']">Email can't be empty</span>
+                              <span
+                                  *ngIf="email.dirty && email.errors?.['incorrectEmailFormat']">{{email.errors?.['incorrectEmailFormat'].msg}}</span>
+                          </div>
+                          <div *ngIf="email.valid && email.dirty" class="valid-feedback d-block">
+                        </div>
+
+                      </div>
+
+
+                      <div class="mb-3">
+                          <label for="password" class="form-label">Password</label>
+                          <input type="password" class="form-control" [class.is-valid]="password.valid && password.dirty"
+                          [class.is-invalid]="password.invalid && password.dirty"
+                          id="password" [formControl]="password">
+                          <div *ngIf="password.dirty && password.invalid" class="invalid-feedback d-block">
+                              <span *ngIf="password.dirty && password.errors?.['required']">Password can't be
+                                  empty</span>
+                              <span *ngIf="password.dirty && password.errors?.['minlength']">Minimum Length should be
+                                  8.</span>
+                              <span
+                                  *ngIf="password.dirty && password.errors?.['incorrectPasswordFormat']">{{password.errors?.['incorrectPasswordFormat'].msg}}
+                                </span>
+                                <div *ngIf="password.valid && password.dirty" class="valid-feedback d-block">
+                                </div>
+                          </div>
+
+
+                      </div>
+                      <div class="text-center">
+                          <button type="submit" class="btn btn-primary"
+                              [disabled]="loginForm.pristine || (loginForm.dirty && loginForm.invalid)">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+
+          <div class="alert alert-danger mt-2" *ngIf="authService.errorFlag" role="alert">
+              Email and Password Mismatched!
+          </div>
+
+      </div>
+  </div>
+</div>

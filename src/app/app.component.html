@@ -1,0 +1,18 @@
+<!-- <app-sidebar (sidebarToggle)="toggleSidebar($event)"></app-sidebar> Sidebar -->
+<app-sidebar></app-sidebar>
+<app-navbar (toggleForm)="toggleTaskForm()"></app-navbar>
+
+<div class="main-content" [ngClass]="{'shifted': !isSidebarOpen}">
+  <router-outlet></router-outlet>
+
+  <!-- Task Form modal -->
+  <div *ngIf="isTaskFormVisible" class="task-form-container">
+    <app-task-form (formClosed)="closeTaskForm()"></app-task-form>
+  </div>
+
+  <!-- Overlay -->
+  <div *ngIf="isTaskFormVisible" class="overlay" (click)="closeTaskForm()"></div>
+</div>
+
+<!-- Include Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
