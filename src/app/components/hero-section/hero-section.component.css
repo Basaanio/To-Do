@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0efec; /* Light background color */
+    padding: 20px; /* Add padding for spacing */
+}
+
+.hero-content {
+    max-width: 50%; /* Limit width of the text area */
+    text-align: left;
+    margin-left:4rem;
+    padding: 10px;
+   
+   
+}
+
+h1 {
+    font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 570;
+  font-size: 4.6rem;
+  font-style: normal;
+  text-transform: capitalize;
+    color: #1D1D1D; /* Pastel coral color */
+    margin-bottom: 2.3rem;
+}
+
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #FF6F61; /* Same coral color */
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: #FF4D3D; /* Darker shade for hover */
+}
+
+.hero-image {
+    max-width: 50%; /* Limit width of the image area */
+}
+
+.hero-image img {
+    max-width: 100%; /* Make image responsive */
+    border-radius: 15px; /* Round the corners */
+}

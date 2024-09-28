@@ -171,6 +171,8 @@ import { Router } from '@angular/router';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskService } from 'src/app/services/taskService';
 import { SearchService } from 'src/app/services/searchService';
+import { AbstractControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -180,11 +182,11 @@ import { SearchService } from 'src/app/services/searchService';
 
 export class DashboardComponent implements OnInit {
   tasks: Task[] = [];
-  filtereTasks: { [date: string]: Task[] } = {};
+  sortedTasks: { [date: string]: Task[] } = {};
   dates: string[] = [];
   paginatedDates: string[] = [];
   currentPage: number = 1;
-  tasksPerPage: number = 5; // Adjust as needed
+  tasksPerPage: number = 4; // Adjust as needed
   totalPages: number = 1;
   currentMonth: string = '';
   currentDate: string = '';
@@ -201,6 +203,7 @@ export class DashboardComponent implements OnInit {
 
   
   @Output() taskCreated = new EventEmitter<void>();
+  
   @ViewChild(TaskFormComponent) taskFormComponent!: TaskFormComponent; // Reference to the TaskFormComponent
 
   
@@ -209,12 +212,16 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private taskService: TaskService,
-    private searchService:SearchService
+    private searchService:SearchService,
+    private toastr:ToastrService
+    
   ) {}
 
   ngOnInit() {
+
     this.dashboardService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
+      this.filteredTasks = tasks;
       this.processTasks();
     });
     
@@ -222,6 +229,7 @@ export class DashboardComponent implements OnInit {
     this.setUserDetailsAndGreeting();
     
     console.log("Hello")
+
     this.searchService.currentTaskTerm.subscribe(searchTerm => {
       this.searchedTask = searchTerm
       this.filterTasksByName()
@@ -229,14 +237,28 @@ export class DashboardComponent implements OnInit {
     // Subscribe to task creation event
     this.taskFormComponent.taskCreated.subscribe((newTask: Task) => {
       this.tasks.push(newTask); // Add the new task to the list
+      this.filteredTasks.push(newTask);
       this.processTasks(); // Reprocess tasks to update the view
     });
-    this.loadTasks(); // Load all tasks initially
-    
-    
+
   }
 
-
+  // ngAfterViewInit() {
+  //   this.taskFormComponent.taskCreated.subscribe((newTask: Task) => {
+  //     this.tasks.push(newTask); // Add the new task to the list
+  //     this.filteredTasks.push(newTask);
+  //     this.processTasks(); // Reprocess tasks to update the view
+  //   });
+  // }
+  
+changeTaskStatus(taskId: number, newStatus: string) {
+    const task = this.tasks.find(t => t.taskId === taskId);
+    if (task) {
+      task.status = newStatus; // Update the status
+    } else {
+      console.error('Task not found');
+    }
+  }
 
   openEditModal(task: Task) {
     this.selectedTask = task; // Set the selected task to edit
@@ -283,63 +305,93 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  onTaskAdded() {
-    this.loadTasks(); // Refresh the task list when a new task is created
+  futureDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const currentDate = new Date();
+    const selectedDate = new Date(control.value);
+    if (selectedDate < currentDate) {
+      return { pastDate: true }; // Return an error object if the date is in the past
+    }
+    return null; // No error
   }
+
+  // onTaskAdded() {
+  //   this.loadTasks(); // Refresh the task list when a new task is created
+  // }
+  onTaskAdded(newTask: Task) {
+    this.loadTasks();
+    console.log('New task added:', newTask);
+    // Add task to the correct date in sortedTasks
+    const taskDate = this.getFormattedDate(newTask.dueDate);  // Get the date of the task
+  
+    if (!this.sortedTasks[taskDate]) {
+      this.sortedTasks[taskDate] = [];  // Initialize if no tasks for that date
+    }
+    this.sortedTasks[taskDate].push(newTask);  // Add new task
+  }
+  
+  onTaskDeleted() {
+    this.loadTasks(); // Reload tasks to reflect the deletion
+  }
+
+ processTasks() {
+      // Initialize an empty array for dates
+      this.dates = [];
+
+      // Sort tasks by due date
+      this.tasks.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+  
+      // Populate sortedTasks with tasks grouped by due date
+      this.sortedTasks = this.tasks.reduce<{ [date: string]: Task[] }>((acc, task) => {
+        const date = new Date(task.dueDate).toDateString();
+        
+        // If the date key doesn't exist in the accumulator, create it
+        if (!acc[date]) {
+          acc[date] = [];
+          this.dates.push(date); // Store the date for later use
+        }
+        
+        // Push the current task to the corresponding date
+        acc[date].push(task);
+        return acc;
+      }, {});
+
+
+
 
   // processTasks() {
   //   // Sort tasks by due date
   //   this.dates = [];
-
+  
   //   this.tasks.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
-
-  //   // Filter and organize tasks by date
-  //   this.filteredTasks = this.tasks.reduce((acc: { [date: string]: Task[] }, task: Task) => {
-  //     const date = new Date(task.dueDate).toDateString();
-  //     if (!acc[date]) {
-  //       acc[date] = [];
-  //       this.dates.push(date);
-  //     }
-  //     acc[date].push(task);
-  //     return acc;
-  //   }, {});
-
-
-
-  processTasks() {
-    // Sort tasks by due date
-    this.dates = [];
   
-    this.tasks.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+  //   // Map to store collaborator colors
+  //   const collaboratorColors = new Map<number, string>();
+  //   const collaboratorsSet = new Set<number>();
   
-    // Map to store collaborator colors
-    const collaboratorColors = new Map<number, string>();
-    const collaboratorsSet = new Set<number>();
-  
-    // Collect unique collaborator IDs
-    this.tasks.forEach(task => {
-      task.collaboratorIds?.forEach(collabId => {
-        collaboratorsSet.add(collabId);
-      });
-    });
+  //   // Collect unique collaborator IDs
+  //   this.tasks.forEach(task => {
+  //     task.collaboratorIds?.forEach(collabId => {
+  //       collaboratorsSet.add(collabId);
+  //     });
+  //   });
   
     
     // Filter and organize tasks by date and assign colors
-    this.filtereTasks = this.tasks.reduce((acc: { [date: string]: Task[] }, task: Task) => {
-      const date = new Date(task.dueDate).toDateString();
-      if (!acc[date]) {
-        acc[date] = [];
-        this.dates.push(date);
-      }
+    // this.sortedTasks = this.tasks.reduce((acc: { [date: string]: Task[] }, task: Task) => {
+    //   const date = new Date(task.dueDate).toDateString();
+    //   if (!acc[date]) {
+    //     acc[date] = [];
+    //     this.dates.push(date);
+    //   }
       
-      // Assign color based on collaborator
-      task.color = task.isCollaborative && task.collaboratorIds.length > 0
-        ? collaboratorColors.get(task.collaboratorIds[0]) || '#D3D3D3' // Default color
-        : '#AEEEEE'; // Default for personal tasks
+    //   // Assign color based on collaborator
+    //   task.color = task.isCollaborative && task.collaboratorIds.length > 0
+    //     ? collaboratorColors.get(task.collaboratorIds[0]) || '#D3D3D3' // Default color
+    //     : '#AEEEEE'; // Default for personal tasks
         
-      acc[date].push(task);
-      return acc;
-    }, {});
+    //   acc[date].push(task);
+    //   return acc;
+    // }, {});
   
  
   
@@ -431,6 +483,7 @@ export class DashboardComponent implements OnInit {
   }
 
   closeTaskForm() {
+    console.log("closed");
     this.isTaskFormVisible = false; 
     // No need to call loadTasks here, as the subscription will handle it
   }
@@ -438,14 +491,28 @@ export class DashboardComponent implements OnInit {
  
   filterTasksByName() {
     if (this.searchedTask) {
-      this.filteredTasks = this.tasks.filter(task =>
+      this.tasks = this.filteredTasks.filter(task =>
         task.title.toLowerCase().includes(this.searchedTask.toLowerCase())
       );
-      this.tasks = this.filteredTasks
       this.processTasks()
     } else {
       this.filteredTasks = this.tasks; // Show all tasks if no search term
       this.processTasks()
     }
   }
+
+
+
+
+  handleTaskCreated(newTask: Task) {
+    this.tasks.push(newTask);
+    console.log("New task added:", newTask);
+    this.refreshTasks();
+  }
+  refreshTasks(): void {
+    this.taskService.getTasks().subscribe((tasks: Task[]) => {
+      this.tasks = tasks; // Update the task list with the fetched tasks
+    });
+  }
+
 }

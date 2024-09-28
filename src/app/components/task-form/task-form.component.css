@@ -78,3 +78,13 @@ h3 {
   background-color: #ccc; /* Scrollbar color */
   border-radius: 10px; /* Rounded scrollbar */
 }
+
+/* styles.css */
+.toast-success {
+  background-color: #28a745; /* green */
+}
+
+.toast-error {
+  background-color: #dc3545; /* red */
+}
+

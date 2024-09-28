@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Route } from '@angular/router';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserCredentials } from 'src/app/models/user-credentails';
 import { UserResponse } from 'src/app/models/user-response';
-
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,7 @@ export class AuthService {
     return false
   }
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public router: Router) {
     this.userProfile = new UserResponse()
     this.errorFlag = false
     this.isLoggedIn = false
@@ -45,6 +46,7 @@ export class AuthService {
       map(response => {
         console.log(response)
         if(response) {
+          localStorage.setItem('currentUser', JSON.stringify(response.jwt))
           Object.assign(this.userProfile, response)
           this.isLoggedIn = true
         } else {
@@ -60,8 +62,32 @@ export class AuthService {
   }
 
   getRequestHeaders(): any {
-    const token = this.userProfile.jwt
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    var userObj = localStorage.getItem('currentUser')
+    if(userObj !== null) {
+      const jwt = JSON.parse(userObj)
+      return new HttpHeaders().set('Authorization', `Bearer ${jwt}`);
+    }
+  }
+
+  getLoggedInUser(): Observable<any> {
+    const headers = this.getRequestHeaders()
+    return this.http.get<any>("http://localhost:8080/api/current-user", {headers}).pipe(
+      map(response => {
+        return {data: response}
+      }),
+      catchError(error => {
+        this.router.navigateByUrl("/signin")
+        return throwError(error)
+      })
+    )
+ 
+  }
+
+
+  logout(): void {
+    localStorage.removeItem('currentUser'); // Remove user data from local storage
+    this.isLoggedIn = false; // Update the login state
+    this.userProfile = new UserResponse(); // Reset the user profile
   }
  
 }

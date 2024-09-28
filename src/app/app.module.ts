@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
- 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +21,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatListModule} from '@angular/material/list'; 
+import {MatListModule} from '@angular/material/list';
+import { HeroSectionComponent } from './components/hero-section/hero-section.component';
+import { FeaturesComponent } from './components/features/features.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ApplicationUserProfileComponent } from './components/application-user-profile/application-user-profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,9 +40,9 @@ import {MatListModule} from '@angular/material/list';
     TaskEditModalComponent,
     SidebarComponent,
     DemoComponent,
-
-  
-    
+    HeroSectionComponent,
+    FeaturesComponent,
+    ApplicationUserProfileComponent    
   ],
   imports: [
     BrowserModule,
@@ -53,8 +57,12 @@ import {MatListModule} from '@angular/material/list';
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    ToastrModule.forRoot({      positionClass: 'toast-top-right',
+      timeOut: 3000,
+      preventDuplicates: true,}),
     ],
+    
   providers: [],
   bootstrap: [AppComponent]
 })

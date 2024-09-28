@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Collaborator, Task } from '../models/task';
 import { AuthService } from './auth-service/auth.service';
+// import { NotificationService } from './notificationService';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +19,8 @@ export class TaskService {
   private apiUrl = 'http://localhost:8080/tasks';
   private collaboratorApiUrl = 'http://localhost:8080/collaborators-tasks/task'; // Base URL for collaborators
 
+  constructor(private http: HttpClient, private authService: AuthService ) { }
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
-
-  private loadTasks() {
-    this.http.get<Task[]>('/api/tasks').subscribe(
-      tasks => this.tasksSubject.next(tasks),
-      error => console.error('Error loading tasks:', error)
-    );
-  }
 
   // createTask(task: Task): Observable<Task> {
   //   const token = this.authService.userProfile.jwt;
@@ -111,6 +105,9 @@ export class TaskService {
     return this.http.put<Task>(`${this.apiUrl}/${taskId}`, taskData);
   }
 
+  deleteTaskWithCollaborators(taskId: number):Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}/${taskId}/collaborators`);
+  }
 
   getCollaboratorsByTaskId(taskId: number): Observable<Collaborator[]> {
     const token = this.authService.userProfile.jwt;
@@ -165,6 +162,50 @@ getPastDueTasks(userId: number): Observable<Task[]> {
     })
   );
 }
+
+getFilteredTasks(userId: number, status: string[], priority: string[]): Observable<Task[]> {
+  const statusQuery = status.join(',');
+  const priorityQuery = priority.join(',');
+
+  // API call with status and priority as query parameters
+  return this.http.get<Task[]>(`${this.apiUrl}/filter?userId=${userId}&status=${statusQuery}&priority=${priorityQuery}`).pipe(
+    map((response: Task[]) => {
+      console.log('Filtered tasks:', response); // Log the filtered tasks
+      return response; // Return the filtered tasks
+    }),
+    catchError(error => {
+      console.error('Error fetching filtered tasks:', error); // Log any error
+      return of([]); // Return an empty array if there's an error
+    })
+  );
 }
+}
+
+
+// completeTask(taskId: number): Observable<void> {
+//   return this.http.put<void>(`${this.apiUrl}/${taskId}/complete`, {}).pipe(
+//       tap(() => {
+//           this.getCollaboratorsByTaskId(taskId).subscribe(collaborators => {
+//               collaborators.forEach(collaborator => {
+//                   const notification: Notification = {
+//                       message: `Task "${taskId}" has been completed.`,
+//                       timestamp: new Date(),
+//                       read: false,
+//                       userId: collaborator.userId
+//                   };
+//                   // Pass the notification object
+//                   this.notificationService.addNotification(notification);
+//               });
+//           });
+//       }),
+//       catchError(error => {
+//           console.error('Error completing task:', error);
+//           return throwError(() => new Error('Failed to complete task'));
+//       })
+//   );
+// }
+
+
+
 
 

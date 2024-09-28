@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './services/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { UserCredentials } from './models/user-credentails';
+import { catchError, throwError } from 'rxjs';
  
 @Component({
   selector: 'app-root',
@@ -31,19 +32,40 @@ isSidebarOpen=true;
     console.log('Sidebar Open State:', this.isSidebarOpen);
   }
 
-   ngOnInit() {
-    var userObj = localStorage.getItem('currentUser')
+  //  ngOnInit() {
+  //   var userObj = localStorage.getItem('currentUser')
 
-    if (userObj !== null) {
-      var myUserDetails = JSON.parse(userObj)
-      var userCreds: UserCredentials = new UserCredentials()
-      userCreds.username = myUserDetails.user.userEmail
-      userCreds.password = myUserDetails.password
-      console.log(userCreds)
-      this.authService.loginUser(userCreds)
+  //   if (userObj !== null) {
+  //     var myUserDetails = JSON.parse(userObj)
+  //     var userCreds: UserCredentials = new UserCredentials()
+  //     userCreds.username = myUserDetails.user.userEmail
+  //     userCreds.password = myUserDetails.password
+  //     console.log(userCreds)
+  //     this.authService.loginUser(userCreds)
+  //   }
+  //   else
+  //     this.router.navigateByUrl("/login")
+  // }
+
+
+  ngOnInit() {
+    var userObj = localStorage.getItem('currentUser')
+    if(userObj !== null) {
+      var jwt = JSON.parse(userObj)
+      this.authService.getLoggedInUser().subscribe(response => {
+        this.authService.userProfile.userLoginDTO = response.data
+        console.log(this.authService.userProfile.userLoginDTO)
+        this.authService.userProfile.jwt = jwt
+        this.authService.isLoggedIn = true
+        this.router.navigateByUrl("/dashboard")
+      }),
+      catchError(error => {
+        return throwError(error)
+      })
     }
-    else
+    else {
       this.router.navigateByUrl("/login")
+    }
   }
 
 

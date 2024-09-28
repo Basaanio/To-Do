@@ -1,6 +1,14 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <input id="title" formControlName="title" type="text" class="form-control" placeholder="Title" />
+    <div class="input-line">
+      <input 
+        id="title" 
+        formControlName="title" 
+        type="text" 
+        class="form-control title-input" 
+        placeholder="Title" 
+      />
+    </div>
     <div *ngIf="taskForm.get('title')?.invalid && submitted" class="text-danger">
       Title is required
     </div>
@@ -12,9 +20,15 @@
 
   <div class="form-group">
     <label for="dueDate">Due Date and Time</label>
-    <input id="dueDate" type="datetime-local" formControlName="dueDate" class="form-control" />
+    <input 
+      id="dueDate" 
+      type="datetime-local" 
+      formControlName="dueDate" 
+      class="form-control" 
+    />
     <div *ngIf="taskForm.get('dueDate')?.invalid && (taskForm.get('dueDate')?.touched || submitted)" class="text-danger">
       <div *ngIf="taskForm.get('dueDate')?.errors?.['required']">Due date and time are required</div>
+      <div *ngIf="taskForm.get('dueDate')?.errors?.['pastDate']">Due date and time cannot be in the past</div>
     </div>
   </div>
 
@@ -49,17 +63,21 @@
     <label for="addCollaborator" class="form-check-label">Add Collaborator</label>
   </div>
 
-  <div class="checkbox-list" *ngIf="isCollaboratorVisible">
+  <div class="collaborator-box" *ngIf="isCollaboratorVisible">
     <h3>Select Collaborators:</h3>
-    <div *ngFor="let user of users; let i = index" class="checkbox-item">
-      <input 
-        type="checkbox" 
-        (change)="toggleCheckbox(i)" 
-        [checked]="selectedCollaborators.includes(user)" /> 
-      <label>{{ user.username }}</label>
+    <div class="checkbox-list">
+      <div *ngFor="let user of users; let i = index" class="checkbox-item">
+        <input 
+          type="checkbox" 
+          (change)="toggleCheckbox(i)" 
+          [checked]="selectedCollaborators.includes(user)" /> 
+        <label>{{ user.username }}</label>
+      </div>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button type="button" (click)="closeTaskForm()" class="btn btn-secondary">Cancel</button>
+  <div class="button-group">
+    <button type="submit" class="btn btn-primary">Add Task</button>
+    <button type="button" (click)="closeTaskForm()" class="btn btn-secondary">Cancel</button>
+  </div>
 </form>

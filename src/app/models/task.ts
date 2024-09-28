@@ -8,6 +8,8 @@
 //     userId: number;
 //     collaborators?: Collaborator[];
 
+import { User } from "./user";
+
 //     constructor(
 //         taskId: number,
 //         title: string,
@@ -75,9 +77,9 @@ export enum Priority {
 
 export enum Status {
     PENDING = 'Pending',
-    COMPLETED = 'Completed',
-    CANCELLED = 'Cancelled',
-    IN_PROGRESS = 'In Progress'
+    //COMPLETED = 'Completed',
+        IN_PROGRESS = 'IN_PROGRESS',
+        COMPLETED='Completed'
 }
 export interface Collaborator {
   [x: string]: any;
@@ -99,14 +101,15 @@ export class Task {
   collaborators?: Collaborator[];
   collaboratorUsernames?: string[];
   color?: string;
+  user?: User;
 
   constructor(
     taskId: number = 0,
     title: string = '',
     description: string = '',
     dueDate: string = '',
-    priority: string = 'Medium',
-    status: string = 'Pending',
+    priority: string = '',
+    status: string = '',
     userId: number = 0,
     isCollaborative: boolean = false,
     collaboratorIds: number[] = [],

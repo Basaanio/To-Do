@@ -1,4 +1,4 @@
-import { inject, NgModule } from '@angular/core';
+import { Component, inject, NgModule } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
@@ -15,6 +15,8 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DemoComponent } from './components/demo/demo.component';
+import { HeroSectionComponent } from './components/hero-section/hero-section.component';
+import { ApplicationUserProfileComponent } from './components/application-user-profile/application-user-profile.component';
 export const guard: CanActivateFn = (
   next: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -30,8 +32,10 @@ const routes: Routes = [
     component: SignupComponent,
  
   },
+ 
   { path: 'login', component: LoginComponent },
-  
+  {path:'',component: HomeComponent}
+  ,
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -56,10 +60,15 @@ const routes: Routes = [
     path:'demo',
     component: DemoComponent
   },
-  // { path: '', component: HomeComponent },
-  // { path: 'list-task/due-today', component: ListTaskComponent }, 
-  // { path: 'list-task/due-this-week', component: ListTaskComponent }, 
-  // { path: 'list-task/past-due', component: ListTaskComponent }, 
+  {
+    path:'heroSection',
+    component : HeroSectionComponent
+  },
+  {
+  path:'applicationUserProfile',
+  component:ApplicationUserProfileComponent,
+  canActivate: [guard]
+  }
 ];
 
 @NgModule({

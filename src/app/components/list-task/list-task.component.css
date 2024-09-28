@@ -1,21 +1,138 @@
+/* Task List Styles */
 .task-list {
-    padding: 1rem;
+  padding: 1rem;
+}
+
+.task-list h2 {
+  margin-bottom: 1rem;
+}
+
+.task-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list li {
+  background: #f8f9fa;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Task Container Styles */
+.task-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of cards */
+  justify-content: space-between; /* Space between cards */
+  gap: 20px; /* Space between cards */
+  margin: 3rem;
+}
+
+.task-card {
+  position: relative; /* Ensure the badge positions relative to the card */
+  background-color: #fff; /* Background color for the card */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px; /* Padding inside the card */
+  flex: 1 1 calc(25% - 20px); /* Four cards per row with spacing */
+  height: 200px; /* Fixed height for the card */
+  transition: transform 0.2s; /* Smooth hover effect */
+  display: flex; /* Use flexbox for content alignment */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Space between content */
+}
+
+.task-card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Task Title and Paragraph Styles */
+h3 {
+  font-size: 1rem;
+  margin: 0; /* Remove default margin */
+}
+
+p {
+  margin: 5px 0; /* Space between paragraphs */
+}
+
+/* Task Icon Hover Effect */
+.task-icon {
+  font-size: 1.5em; /* Increase size */
+  color: green; /* Change color */
+  margin-left: 10px; /* Space between title and icon */
+  transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.task-icon:hover {
+  transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+/* Filter Options Container */
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.filter-options {
+  background-color: #e7f0fe;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-width: 250px;
+  border: 1px solid #c4d6ec;
+}
+
+.filter-options h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.filter-options h4 {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+.filter-options label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #444;
+}
+
+.filter-options input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* No Tasks Message */
+#noTasks {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #999;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .task-container {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .task-list h2 {
-    margin-bottom: 1rem;
+
+  .task-card {
+      width: 100%;
   }
-  
-  .task-list ul {
-    list-style-type: none;
-    padding: 0;
+
+  .filter-options {
+      max-width: 100%;
+      margin-bottom: 20px;
   }
-  
-  .task-list li {
-    background: #f8f9fa;
-    margin: 0.5rem 0;
-    padding: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+}

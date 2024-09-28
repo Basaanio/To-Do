@@ -1,0 +1,45 @@
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <div class="profile-fields">
+      <label for="username">Username:</label>
+      <input
+        id="username"
+        type="text"
+        [(ngModel)]="userProfile.username"
+        [disabled]="!isEditing && !isUpdatingPassword"
+      />
+   
+      <label for="email">Email:</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="userProfile.email"
+        disabled
+      />
+   
+      <!-- Password field, only shown when updating password -->
+      <div *ngIf="isUpdatingPassword">
+        <label for="password">Enter New Password:</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="newPassword"
+          placeholder="Enter new password"
+        />
+      </div>
+    </div>
+   
+    <div class="action-buttons">
+      <!-- Buttons for editing profile and updating password -->
+      <button *ngIf="!isEditing && !isUpdatingPassword" (click)="editProfile()">
+        Edit
+      </button>
+      <button *ngIf="!isEditing && !isUpdatingPassword" (click)="updatePassword()">
+        Update Password
+      </button>
+   
+      <!-- Cancel and Save buttons, shown when editing or updating password -->
+      <button *ngIf="isEditing || isUpdatingPassword" (click)="saveProfile()">Save</button>
+      <button *ngIf="isEditing || isUpdatingPassword" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>

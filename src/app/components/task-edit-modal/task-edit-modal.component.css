@@ -7,8 +7,8 @@
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   z-index: 1050; 
   display: flex; /* Use flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center;/* Higher than other content */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
 }
 
 .modal-content {
@@ -28,19 +28,27 @@
 .modal-content form {
   display: flex;
   flex-direction: column;
+
 }
 
 .modal-content form > div {
   margin-bottom: 1rem; /* Space between form fields */
+
 }
 
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-  width: 100%; /* Full width for form elements */
+.modal-content input
+
+ {
+ 
   padding: 10px; /* Add padding */
   border: 1px solid #ccc; /* Add border */
+ 
   border-radius: 4px; /* Rounded corners */
+}
+
+.modal-content select,
+.modal-content textarea{
+  width: 100%; /* Full width for form  elements */
 }
 
 .btn {
@@ -51,7 +59,41 @@
   background-color: #f0f0f0; /* Light grey on hover */
   cursor: pointer; /* Pointer cursor for buttons */
 }
+
 .blur {
   filter: blur(4px); /* Adjust the blur amount as needed */
   transition: filter 0.3s; /* Smooth transition */
 }
+
+.checkbox-list::-webkit-scrollbar {
+  width: 8px; /* Adjust scrollbar width */
+}
+
+.checkbox-list::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Scrollbar color */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+
+.form-group {
+  margin-bottom: 15px; /* Spacing between form groups */
+}
+
+.form-check {
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center checkbox and label vertically */
+  margin-bottom: 10px; /* Space between checkbox groups */
+}
+
+.form-check-input {
+  width: 15px; /* Adjust width for better visibility */
+  height: 15px; /* Adjust height for better visibility */
+  margin-right: 10px; /* Space between checkbox and label */
+}
+
+.form-check-label {
+  margin: 0; /* Remove default margin */
+  font-size: 1em; /* Set font size */
+  color: #333; /* Text color */
+}
+

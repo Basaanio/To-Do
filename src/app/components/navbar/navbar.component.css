@@ -1,11 +1,18 @@
 /* Navbar Styles */
 .navbar {
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #FF6F61; /* Bootstrap primary color */
   display: flex;
   align-items: center;
   justify-content: space-between; 
 }
 
+.navbarsection {
+  background-color:#f0efec;
+}
+
+.nav-item{
+  margin: 0 10px;
+}
 /* Navbar brand styles */
 .navbar-brand {
   color: #ffffff; /* White color for brand text */
@@ -14,7 +21,6 @@
 .navbar-brand:hover {
   color: #d3d3d3; /* Light gray color on hover */
 }
-
 
 /* Nav link styles */
 .navbar-nav .nav-link {
@@ -27,6 +33,10 @@
 
 .navbar-nav .nav-link:hover {
   color: #d3d3d3; /* Light gray color on hover */
+}
+
+.nav list{
+  line-height: 5rem;
 }
 
 /* Dropdown menu styles */
@@ -65,31 +75,34 @@
 /* Navbar collapses on smaller screens */
 @media (max-width: 991.98px) {
   .navbar-collapse {
-    background-color: #007bff; /* Match the background color when collapsed */
+   
   }
 }
 
 /* Search container styles */
 .search-container {
-  flex-grow: 1; /* Take available space */
+  flex-grow: 2; /* Take available space */
   display: flex;
+  width: 800px;
   justify-content: center; /* Center horizontally */
 }
 
 .search-bar {
-  border-radius: 5px; /* Optional: Rounded corners */
+  border-radius: 79px; /* Optional: Rounded corners */
   padding: 5px; /* Add some padding */
-  width: 300px; /* Set a width for the input */
+  width: 600px; /* Set a width for the input */
   max-width: 100%; /* Ensure it doesn't overflow */
 }
 .navbar-nav {
   display: flex;
-  align-items: center; /* Align items vertically */
+  align-items: center;
+  border-radius: 79px; /* Align items vertically */
 }
 
 .navbar-nav.ms-auto {
   display: flex;
-  align-items: center; /* Align items vertically */
+  align-items: center;
+  border-radius: 79px; /* Align items vertically */
 }
 
 /* Content styles */
@@ -102,10 +115,12 @@ h2 {
 }
 
 /* Sidenav styles */
+
 mat-toolbar {
   position: fixed;
   top: 0;
   z-index: 2;
+  
 }
 
 mat-sidenav-container {
@@ -115,12 +130,13 @@ mat-sidenav-container {
 mat-sidenav {
   padding-top: 3.5rem; /* Account for the fixed toolbar */
   transition: width 0.3s ease;
+  padding-top: 5rem;
 }
-
 
 @media screen and (min-width: 600px) {
   mat-sidenav {
     padding-top: 4rem; /* Adjust padding for larger screens */
+    background-color: #1D1D1D;
   }
 }
 
@@ -128,21 +144,58 @@ mat-sidenav {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem;
+  padding: 1rem; /* Increase padding for more space inside each item */
+  color: #f0efec;
+  padding-top: 3rem; /* Keep this if you want space at the top */
+}
+
+.entry mat-icon{
+  color: #FF6F61;
 }
 
 mat-sidenav-content {
   padding: 0; /* Remove any padding */
   margin: 0;   /* Account for the fixed toolbar */
+  background-color:#f0efec;
+  padding-top: 5rem;
+
 }
 
-/* @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
   mat-sidenav-content {
     padding-top: 4rem; 
-  } */
-
+  }
+}
 
 /* Expanded sidebar style */
 .expanded {
   width: 250px;   
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Position below the toggle */
+  left: 0;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+.show {
+  display: block;
+}
+
+.badge {
+  position: absolute; /* Position badge over the icon */
+  top: -5px; /* Adjust position vertically */
+  right: -10px; /* Adjust position horizontally */
+  background-color: red; /* Background color of the badge */
+  color: white; /* Text color of the badge */
+  border-radius: 50%; /* Make it circular */
+  padding: 5px 8px; /* Padding for the badge */
+  font-size: 12px; /* Font size for the badge */
+}
+
+.profile-pic {
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  border-radius: 50%; /* Make it round */
+  cursor: pointer; /* Change cursor to pointer on hover */
 }

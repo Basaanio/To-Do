@@ -91,13 +91,13 @@
       <router-outlet></router-outlet>
   </mat-sidenav-container> -->
 
-  <mat-toolbar color="primary" class="d-flex justify-content-between align-items-center">
+  <mat-toolbar  class="d-flex justify-content-between align-items-center navbarsection">
     <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="navbar-brand">ToDO</span>
   
-    <div class="search-container mx-auto" style="flex-grow: 1; display: flex; justify-content: center;">
+    <div class="search-container mx-auto">
       <form class="d-flex search-form" (ngSubmit)="onSearch()" *ngIf="authService.isLoggedIn">
         <input
           class="form-control search-input me-2"
@@ -112,19 +112,33 @@
         <!-- <button class="btn btn-outline-light search-btn" type="submit">Search</button> -->
       </form>
     </div>
+
+    <div class="nav-item me-2">
+      <a class="nav-link" routerLink="/">Home</a>
+    </div>
+   
   
-    <ul class="navbar-nav ms-auto" *ngIf="!authService.isLoggedIn">
-      <li class="nav-item">
+
+   
+    <div class="d-flex ms-auto" *ngIf="!authService.isLoggedIn">
+      <div class="nav-item me-2">
         <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-      <li class="nav-item">
+      </div>
+      <div class="nav-item">
         <a class="nav-link" routerLink="/signup">Signup</a>
-      </li>
-    </ul>
+      </div>
+    </div>
+
+
+  
   
     <button *ngIf="authService.isLoggedIn" mat-icon-button aria-label="Add Task" (click)="onAddClick()">
       <mat-icon>add</mat-icon>
     </button>
+
+    <img src="assets/user.png" alt="User Profile" class="profile-pic" (click)="navigateToProfile()" />
+
+
   </mat-toolbar>
   
   <mat-sidenav-container autosize>
@@ -163,14 +177,32 @@
             <span *ngIf="!isCollapsed">Past due</span>
           </span>
         </a>
+
+
+
+        <a mat-list-item style="margin-top: auto; color: red;"(click)="logout()">
+          <span class="entry">
+            <mat-icon>logout</mat-icon>
+            <span *ngIf="!isCollapsed">Logout</span>
+          </span>
+        </a>
         <!-- Add more sidebar items as needed -->
       </mat-nav-list>
     </mat-sidenav>
+
+    
   
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  
+
+  
+  
+  
+  
+  
   
   
   

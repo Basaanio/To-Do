@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthService } from './auth-service/auth.service';
+import { UserRegisterDTO } from '../models/user-registerDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -31,21 +32,35 @@ export class UserService {
   }
   
 
-  getUserById(userId: number): Observable<User> {
+  getUserById(userId: number): Observable<{ data: UserRegisterDTO }> {
     return this.http.get<User>(`${this.apiUrl}/${userId}`).pipe(
+      map(response => {
+        if (response) {
+          console.log(response)
+          return { data: response };
+         // Wrapping response in data object
+        } else {
+          throw new Error('User not found');
+        }
+
+      }),
       catchError(error => {
-        this.errorFlag = true;
-        console.error("Error fetching user", error);
-        return throwError(error);
+        console.error('Error fetching user profile:', error);
+        return throwError(() => new Error('Error fetching user profile'));
       })
     );
   }
 
-  updateUser(userId: number, userData: User): Observable<User> {
+  updateUser(userId: number, userData: User): Observable<{ data: UserRegisterDTO }> {
     return this.http.put<User>(`${this.apiUrl}/${userId}`, userData).pipe(
       map(response => {
+        if(response){
         console.log("User updated successfully", response);
-        return response;
+        return { data: response };
+        }
+        else {
+          throw new Error('User not found');
+        }
       }),
       catchError(error => {
         this.errorFlag = true;

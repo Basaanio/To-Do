@@ -1,11 +1,21 @@
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <div *ngIf="tasks.length === 0">
+  <h2>Hello, please add tasks</h2>
+</div>
+
 <div class="calendar-container">
   <div class="greeting-section">
     <p>{{ currentDate }}</p>
     <p>{{ greetingMessage }}, {{ authService.userProfile.userLoginDTO.username }}</p>
   </div>
   <hr>
-
-
 
   <div class="calendar-pagination">
     <button (click)="previousPage()" class="pagination-button" [disabled]="currentPage === 1">&larr;</button> 
@@ -42,7 +52,7 @@
 <div class="calendar-row task-data-row">
   <div class="day-column" *ngFor="let date of paginatedDates">
     <div class="task-list">
-      <div class="task-card" *ngFor="let task of filtereTasks[date]" 
+      <div class="task-card" *ngFor="let task of sortedTasks[date]" 
            (click)="openEditModal(task)"
            [ngStyle]="{'background-color': task.isCollaborative ? '#C7DBF2' : '#F2DAEF'}"> 
 
@@ -55,8 +65,8 @@
         <span class="badge rounded-pill" 
         [ngClass]="{
           'bg-primary': task.status === 'PENDING', 
-          'bg-success': task.status === 'COMPLETED', 
           'bg-warning': task.status === 'IN_PROGRESS',
+          'bg-success': task.status === 'COMPLETED'
         }" 
         style="position: absolute; top: 10px; right: 10px; z-index: 10;">
     {{ task.status }}
@@ -74,14 +84,28 @@
 
 
     <!-- Task Form -->
-    <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded()"></app-task-form>
+    <!-- <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded($event)"></app-task-form> -->
+    <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded($event)" (formClosed)="closeTaskForm()"></app-task-form>
+
+
     
     <app-task-edit-modal 
       *ngIf="isModalOpen" 
       [task]="selectedTask!" 
-      (close)="closeModal($event)">
+      (close)="closeModal($event)"
+      (taskDeleted)="onTaskDeleted()">
+      <!-- //(statusChanged)="onStatusChange($event)"> -->
     </app-task-edit-modal>
   </div>
 </div>
+</body>
+
+
+
+
+
+
+
+
 
 
