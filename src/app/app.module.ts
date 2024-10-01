@@ -14,18 +14,18 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
 import { TaskEditModalComponent } from './components/task-edit-modal/task-edit-modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { DemoComponent } from './components/demo/demo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {MatIconModule, MatButtonModule, MatToolbarModule, MatSidenavModule,MatListModule}
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
-import { FeaturesComponent } from './components/features/features.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ApplicationUserProfileComponent } from './components/application-user-profile/application-user-profile.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { InfosectionComponent } from './components/infosection/infosection.component';
+import { Infosection2Component } from './components/infosection2/infosection2.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +39,11 @@ import { ApplicationUserProfileComponent } from './components/application-user-p
     ListTaskComponent,
     TaskEditModalComponent,
     SidebarComponent,
-    DemoComponent,
     HeroSectionComponent,
-    FeaturesComponent,
-    ApplicationUserProfileComponent    
+    ApplicationUserProfileComponent,
+    FooterComponent,
+    InfosectionComponent,
+    Infosection2Component    
   ],
   imports: [
     BrowserModule,

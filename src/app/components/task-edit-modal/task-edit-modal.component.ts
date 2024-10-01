@@ -1,106 +1,3 @@
-// import { Component, Input, Output, EventEmitter } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { TaskService } from 'src/app/services/taskService';
-// import { Task } from 'src/app/models/task';
-// import { AuthService } from 'src/app/services/auth-service/auth.service';
-
-// @Component({
-//   selector: 'app-task-edit-modal',
-//   templateUrl: './task-edit-modal.component.html',
-//   styleUrls: ['./task-edit-modal.component.css']
-// })
-// export class TaskEditModalComponent {
-//   @Input() task!: Task; // Task to edit
-//   @Output() close = new EventEmitter<Task>(); // Emit when done
-//   taskForm!: FormGroup;
-//   @Output() statusChanged = new EventEmitter<string>();
-
-
-//   collaboratorIds: number[] = []; // Store collaborator IDs
-//   collaboratorUsernames: string[] = []; 
-
-//   constructor(private fb: FormBuilder, private taskService: TaskService, public authService: AuthService) {
-//     this.createForm();
-//   }
-
-//   createForm() {
-//     this.taskForm = this.fb.group({
-//       title: ['', Validators.required],
-//       description: [''],
-//       dueDate: ['', Validators.required],
-//       priority: ['', Validators.required],
-//       status: ['', Validators.required],
-//       collaboratorIds: [[]] 
-//     });
-//   }
-
-//   ngOnInit() {
-//     console.log(this.task)
-//     // this.taskService.getCollaboratorsByTaskId(this.task.taskId).subscribe(response => console.log(response))
-
-//     if (this.task) {
-//       this.taskService.getCollaboratorsByTaskId(this.task.taskId).subscribe(response => {
-//         response.forEach(collabortor => {
-//           if(collabortor['collaboratorUser'].username !== this.authService.userProfile.userLoginDTO.username) {
-//             this.collaboratorUsernames.push(collabortor['collaboratorUser'].username)
-//           }
-//         })
-//       });
-//     }
-  
-//   }
-
-
-//   ngOnChanges() {
-//     if (this.task) {
-//       console.log('Task data:', this.task); // Log the entire task object
-//       const dueDateUTC = new Date(this.task.dueDate);
-//       const localDate = new Date(dueDateUTC.getTime() - dueDateUTC.getTimezoneOffset() * 60000);
-  
-//       this.taskForm.patchValue({
-//         title: this.task.title,
-//         description: this.task.description,
-//         dueDate: localDate.toISOString().slice(0, 16),
-//         priority: this.task.priority,
-//         status: this.task.status,
-//       });
-  
-//     }
-//   }
-//   markAsDone() {
-//     this.task.status = 'COMPLETED';
-//     this.statusChanged.emit(this.task.status); 
-//   }
-  
-
-// onSubmit() {
-//   if (this.taskForm.valid) {
-//       const dueDateLocal = new Date(this.taskForm.value.dueDate);
-//       const dueDateUTC = new Date(dueDateLocal.getTime() - dueDateLocal.getTimezoneOffset() * 60000);
-
-//       const updatedTaskData: Task = {
-//           ...this.task,
-//           ...this.taskForm.value,
-//           dueDate: dueDateUTC.toISOString(), // Send as ISO string in UTC
-//       };
-
-//       this.taskService.updateTask(this.task.taskId, updatedTaskData).subscribe(
-//           (response: Task) => {
-//               this.close.emit(response);
-//           },
-//           error => {
-//               console.error("Error updating task:", error);
-//           }
-//       );
-//   }
-// }
-
-
-//   onCancel() {
-//     this.close.emit(); // Emit without data to indicate cancellation
-//   }
-// }
-
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/services/taskService';
@@ -118,16 +15,17 @@ import { Status } from 'src/app/models/task';
   styleUrls: ['./task-edit-modal.component.css']
 })
 export class TaskEditModalComponent implements OnInit {
-  @Input() task!: Task; // Task to edit
-  @Output() close = new EventEmitter<Task>(); // Emit when done
-  @Output() taskDeleted = new EventEmitter<void>(); // Define the taskDeleted event
+  @Input() task!: Task; 
+  @Output() taskDeleted = new EventEmitter<void>(); 
+   @Output() closeModal = new EventEmitter<void>();
+
   
 
   taskForm!: FormGroup;
-  users: User[] = []; // List of users
-  selectedCollaborators: User[] = []; // Selected collaborators
-  isCollaboratorVisible: boolean = false; // To track visibility of collaborator selection
-  creatorUsername: string = ''; // To store the creator's username
+  users: User[] = []; 
+  selectedCollaborators: User[] = []; 
+  isCollaboratorVisible: boolean = false; 
+  creatorUsername: string = ''; 
 
 
   constructor(
@@ -141,18 +39,6 @@ export class TaskEditModalComponent implements OnInit {
     this.createForm();
   }
 
-  // ngOnInit() {
-  //   this.loadUsers();
-  //   if (this.task) {
-  //     this.patchTaskForm();
-  //     this.loadSelectedCollaborators();
-  //     if (this.task.status === 'COMPLETED') {
-  //       this.taskForm.disable();
-  //     }
-  //   } else {
-  //     this.createForm(); // Create form for a new task
-  //   }
-  //   }
 
 
   ngOnInit() {
@@ -178,6 +64,10 @@ export class TaskEditModalComponent implements OnInit {
     });
 }
 
+close() {
+      console.log("emitting from task edit modal");
+      this.closeModal.emit();
+}
   
 
   createForm() {
@@ -190,41 +80,31 @@ export class TaskEditModalComponent implements OnInit {
       creator: [{ value: '', disabled: true }] // Creator field (read-only)
     });
   }
-//     AsComplete(task: Task) {
-//     // Update the task status in the backend (make sure to implement this API call)
-//     task.status = Status.COMPLETED; // Update the task status
-//     // Notify collaborators
-//     this.notificationService.notifyCollaborators(task);
-// }
-// In your task completion logic
 
 markTaskAsDone() {
-  this.task.status = 'COMPLETED'; // Update the task status
+  this.task.status = 'COMPLETED'; 
 
   this.taskService.updateTask(this.task.taskId, this.task).subscribe(
       (response: Task) => {
-          this.close.emit(response); // Emit the updated task
-          this.toastr.success('Task marked as completed!', 'Success'); // Success notification
+          this.close(); 
+          this.toastr.success('Task marked as completed!', 'Success'); 
       },
       error => {
           console.error('Error marking task as done:', error);
-          this.toastr.error('Error marking task as completed!', 'Error'); // Error notification
+          this.toastr.error('Error marking task as completed!', 'Error');
       }
   );
 }
 
-
-  
   
 loadUsers() {
   this.userService.getUsers().subscribe(
     (users: User[]) => {
-      const loggedInUserId = this.authService.userProfile.userLoginDTO.userId; // Get logged-in user ID
+      const loggedInUserId = this.authService.userProfile.userLoginDTO.userId; 
 
-      // Filter out the logged-in user from the list of users
       this.users = users.filter(user => user.userId !== loggedInUserId); 
 
-      console.log('Fetched Users:', this.users); // Log the filtered user list
+      console.log('Fetched Users:', this.users); 
     },
     error => {
       console.error('Error fetching users:', error);
@@ -232,6 +112,24 @@ loadUsers() {
   );
 }
 
+
+markTaskAsCompletedForCollaborator(): void {
+      const collaboratorUserId = this.authService.userProfile.userLoginDTO.userId;
+      const taskId = this.task.taskId;
+  
+      this.taskService.updateCollaboratorTaskStatus(taskId, collaboratorUserId, true)
+        .subscribe(
+          (updatedTask: Task) => {
+            console.log('Collaborator marked task as completed:', updatedTask);
+            this.task = updatedTask;
+          },
+          (error) => {
+            console.error('Error marking task as completed:', error);
+          }
+          
+        );
+    }
+    
 
   toggleCollaborator() {
     this.isCollaboratorVisible = !this.isCollaboratorVisible;
@@ -248,21 +146,19 @@ loadUsers() {
   }
 
   loadSelectedCollaborators() {
-    // Load collaborators for the current task
     this.taskService.getCollaboratorsByTaskId(this.task.taskId).subscribe(collaborators => {
       const creatorId = this.task.user?.userId;
       this.selectedCollaborators = collaborators.map(c => c['collaboratorUser']);
   
-      // Check if there are any collaborators and set the visibility flag accordingly
       this.isCollaboratorVisible = this.selectedCollaborators.length > 0;
     });
   }
   loadCreatorUsername() {
-    const creatorId = this.task.userId; // Get the userId directly from the task
+    const creatorId = this.task.userId; 
     this.userService.getUserById(creatorId).subscribe(
       response => {
-        const user = response.data; // Extract the user from the response
-        this.creatorUsername = user.username; // Store the creator's username
+        const user = response.data; 
+        this.creatorUsername = user.username; 
       },
       error => {
         console.error('Error fetching creator username:', error);
@@ -285,26 +181,6 @@ loadUsers() {
     return this.selectedCollaborators.some(collaborator => collaborator.userId === user.userId);
   }
 
-  // onSubmit() {
-  //   if (this.taskForm.valid) {
-  //     const updatedTaskData: Task = {
-  //       ...this.task,
-  //       ...this.taskForm.value,
-  //       collaboratorIds: this.selectedCollaborators.map(user => user.userId)
-  //     };
-
-  //     this.taskService.updateTask(this.task.taskId, updatedTaskData).subscribe(
-  //       (response: Task) => {
-  //         this.close.emit(response);
-  //       },
-  //       error => {
-  //         console.error('Error updating task:', error);
-  //       }
-  //     );
-  //   }
-  // }
-
-
   onSubmit() {
     if (this.taskForm.valid) {
       const updatedTaskData: Task = {
@@ -312,17 +188,17 @@ loadUsers() {
         ...this.taskForm.value,
         collaboratorIds: this.isCollaboratorVisible 
           ? this.selectedCollaborators.map(user => user.userId)
-          : [] // No collaborators if the checkbox is unchecked
+          : [] 
       };
   
       this.taskService.updateTask(this.task.taskId, updatedTaskData).subscribe(
         (response: Task) => {
-          this.close.emit(response);
-          this.toastr.success('Task updated successfully!', 'Success'); // Success notification
+          this.close();
+          this.toastr.success('Task updated successfully!', 'Success');
        },
         error => {
           console.error('Error updating task:', error);
-          this.toastr.error('Error updating task!', 'Error'); // Error notification
+          this.toastr.error('Error updating task!', 'Error'); 
 
         }
       );
@@ -331,21 +207,21 @@ loadUsers() {
   
 
   onCancel() {
-    this.close.emit(); // Emit without data to indicate cancellation
+    this.close(); 
   }
   deleteTask() {
     const taskId = this.task.taskId; 
     this.taskService.deleteTaskWithCollaborators(taskId).subscribe(
       () => {
         console.log('Task and collaborators deleted successfully');
-        this.taskDeleted.emit(); // Emit event after deletion
-        this.close.emit(); // Close the modal
-        this.toastr.success('Task deleted successfully!', 'Success'); // Success notification
+        this.taskDeleted.emit(); 
+        this.close();
+        this.toastr.success('Task deleted successfully!', 'Success'); 
 
       },
       error => {
         console.error('Error deleting task:', error);
-        this.toastr.error('Error deleting task!', 'Error'); // Error notification
+        this.toastr.error('Error deleting task!', 'Error'); 
 
       }
     );

@@ -32,23 +32,7 @@ isSidebarOpen=true;
     console.log('Sidebar Open State:', this.isSidebarOpen);
   }
 
-  //  ngOnInit() {
-  //   var userObj = localStorage.getItem('currentUser')
-
-  //   if (userObj !== null) {
-  //     var myUserDetails = JSON.parse(userObj)
-  //     var userCreds: UserCredentials = new UserCredentials()
-  //     userCreds.username = myUserDetails.user.userEmail
-  //     userCreds.password = myUserDetails.password
-  //     console.log(userCreds)
-  //     this.authService.loginUser(userCreds)
-  //   }
-  //   else
-  //     this.router.navigateByUrl("/login")
-  // }
-
-
-  ngOnInit() {
+   ngOnInit() {
     var userObj = localStorage.getItem('currentUser')
     if(userObj !== null) {
       var jwt = JSON.parse(userObj)
@@ -68,28 +52,5 @@ isSidebarOpen=true;
     }
   }
 
-
-
-
-  //ngOnInit() {
-    // var userObj = localStorage.getItem('currentUser')
- 
-    // if (userObj !== null) {
-    //   var myUserDetails = JSON.parse(userObj)
-    //   var userCreds: UserCredentials = new UserCredentials()
-    //   userCreds.username = myUserDetails.user.username
-    //   userCreds.password = myUserDetails.password
-    //   console.log(userCreds)
-    //   this.authService.loginUser(userCreds).subscribe(
-    //     response => {
-    //       this.router.navigateByUrl("/dashboard")
-    //     },
-    //     err => {
-    //       console.error('Login Failed', err)
-    //     }
-    //   )
-    // }
-    // else
-    //   this.router.navigateByUrl("/signin")
   }
 

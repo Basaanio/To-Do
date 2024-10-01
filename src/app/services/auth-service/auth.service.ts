@@ -30,9 +30,19 @@ export class AuthService {
 
   }
 
-  register(user: User) {
-    let savedUser: any;
-    this.http.post<any>("http://localhost:8080/api/users/register", user).subscribe(response=>{console.log(response)});
+  // register(user: User) {
+  //   let savedUser: any;
+  //   this.http.post<any>("http://localhost:8080/api/users/register", user).subscribe(response=>{console.log(response)});
+  // }
+
+  register(user: User): Observable<any> {
+    return this.http.post<any>("http://localhost:8080/api/users/register", user).pipe(
+      map(response => {
+        // You can transform the response if needed
+        console.log('Response from server:', response);
+        return response; // Return the response or any transformation of it
+      })
+    );
   }
 
   loginUser(user: UserCredentials):Observable<any> {

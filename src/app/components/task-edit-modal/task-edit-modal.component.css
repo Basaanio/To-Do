@@ -1,99 +1,240 @@
+/* Overall Modal Styling */
 .modal-overlay {
-  position: fixed; /* Fixes the overlay to the viewport */
-  top: 0;
+  position: fixed;
+  top: 50;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 1050; 
-  display: flex; /* Use flexbox for centering */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto; /* Allow scrolling */
+  pointer-events: auto; /* Enable interactions with modal */
 }
 
 .modal-content {
-  position: relative; /* Change from absolute to relative */
-  margin: auto; /* Center horizontally */
-  padding: 20px;
-  background-color: white; /* Ensure it stands out */
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 90%; /* Set a percentage width for responsiveness */
-  max-width: 500px; /* Set a maximum width */
-  height: auto; /* Allow height to adjust based on content */
-  max-height: 80%; /* Limit the maximum height */
-  overflow-y: auto; /* Allow scrolling if content is too tall */
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh; /* Limit modal height */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto; /* Scrollable modal content */
 }
 
-.modal-content form {
+/* Form Styling */
+.modelform {
   display: flex;
   flex-direction: column;
-
+  gap: 15px;
 }
 
-.modal-content form > div {
-  margin-bottom: 1rem; /* Space between form fields */
-
+.modelform label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
 }
 
-.modal-content input
+.modelform input,
+.modelform select,
+.modelform textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
 
- {
+.modelform input:focus,
+.modelform select:focus,
+.modelform textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}
+
+button.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+button.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Collaborator Checkbox List */
+.checkbox-list {
+  border: 1px solid #eee;
+  padding-top: 15px;
  
-  padding: 10px; /* Add padding */
-  border: 1px solid #ccc; /* Add border */
- 
-  border-radius: 4px; /* Rounded corners */
+  height: 200px;
+  overflow-y: scroll;
+
 }
 
-.modal-content select,
-.modal-content textarea{
-  width: 100%; /* Full width for form  elements */
+.checkbox-list h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 
-.btn {
-  margin-right: 10px; /* Space between buttons */
+.checkbox-item {
+  margin: 8px;
+  display: flex;
 }
 
-.btn:hover {
-  background-color: #f0f0f0; /* Light grey on hover */
-  cursor: pointer; /* Pointer cursor for buttons */
+.checkbox-item label {
+  font-size: 14px;
 }
 
-.blur {
-  filter: blur(4px); /* Adjust the blur amount as needed */
-  transition: filter 0.3s; /* Smooth transition */
+.checkbox-item input{
+  width: auto;
+  margin-right: 10px;
+}
+/* Mark as Done Button */
+.MarkAsDoneButton {
+  margin: 20px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 20px;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.checkbox-list::-webkit-scrollbar {
-  width: 8px; /* Adjust scrollbar width */
+.btn{
+  padding: 10px;
+}
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
 }
 
-.checkbox-list::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Scrollbar color */
-  border-radius: 10px; /* Rounded scrollbar */
+.btn-success:hover {
+  background-color: #218838;
 }
 
-
-.form-group {
-  margin-bottom: 15px; /* Spacing between form groups */
+/* Task Creator Info */
+div[ngIf="creatorUsername"] {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
 }
 
-.form-check {
-  display: flex; /* Use flexbox to align items */
-  align-items: center; /* Center checkbox and label vertically */
-  margin-bottom: 10px; /* Space between checkbox groups */
+/* Task Info */
+.TaskInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.form-check-input {
-  width: 15px; /* Adjust width for better visibility */
-  height: 15px; /* Adjust height for better visibility */
-  margin-right: 10px; /* Space between checkbox and label */
+.TaskInfo p {
+  margin: 0;
 }
 
-.form-check-label {
-  margin: 0; /* Remove default margin */
-  font-size: 1em; /* Set font size */
-  color: #333; /* Text color */
+/* Header Styling */
+.modal-header {
+  margin-bottom: 20px;
 }
 
+.modal-title input {
+  font-size: 24px;
+  border: none;
+  font-weight: bold;
+  width: 100%;
+  padding: 5px 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-title input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.task-details {
+  margin-top: 15px;
+}
+
+.form-check-input{
+  width: auto !important;
+  margin-right: 5px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  .modelform input,
+  .modelform select,
+  .modelform textarea {
+    font-size: 16px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}

@@ -77,7 +77,6 @@ export enum Priority {
 
 export enum Status {
     PENDING = 'Pending',
-    //COMPLETED = 'Completed',
         IN_PROGRESS = 'IN_PROGRESS',
         COMPLETED='Completed'
 }
@@ -86,6 +85,7 @@ export interface Collaborator {
   userId: number;
   username: string;
   email: string;
+  completed: boolean;
 }
 
 export class Task {

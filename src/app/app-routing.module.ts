@@ -14,9 +14,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { DemoComponent } from './components/demo/demo.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
 import { ApplicationUserProfileComponent } from './components/application-user-profile/application-user-profile.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { InfosectionComponent } from './components/infosection/infosection.component';
+import { Infosection2Component } from './components/infosection2/infosection2.component';
 export const guard: CanActivateFn = (
   next: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -57,10 +59,6 @@ const routes: Routes = [
     component:SidebarComponent,
   },
   {
-    path:'demo',
-    component: DemoComponent
-  },
-  {
     path:'heroSection',
     component : HeroSectionComponent
   },
@@ -68,6 +66,18 @@ const routes: Routes = [
   path:'applicationUserProfile',
   component:ApplicationUserProfileComponent,
   canActivate: [guard]
+  },
+  {
+    path: 'footer',
+    component: FooterComponent
+  },
+  {
+    path:'infosection',
+    component: InfosectionComponent
+  },
+  {
+    path:'infosection2',
+    component: Infosection2Component
   }
 ];
 

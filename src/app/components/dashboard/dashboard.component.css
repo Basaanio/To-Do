@@ -8,6 +8,15 @@ body{
   padding-top: 1rem;
   background-color:#f0efec;
 }
+.no-tasks-message {
+  text-align: center; 
+  margin: 50px 0; 
+  padding: 20px;
+  background-color: #ffffff; 
+  border: 1px solid #d3d3d3; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
 
 .calendar-title {
   font-size: 2rem;
@@ -17,18 +26,17 @@ body{
 .calendar-pagination {
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-between; /* Spread arrows to the left and right sides */
+  justify-content: space-between; 
   align-items: center;
   font-size: 2rem; 
 
 
-  /* Increase the size of the arrows */
 }
 
 .pagination-button {
   background: none;
   border: none;
-  font-size: 2rem; /* Bigger font size for arrows */
+  font-size: 2rem; 
   cursor: pointer;
   padding: 0.5rem 1rem;
 }
@@ -41,27 +49,27 @@ body{
   font-size: 3rem;
   font-style: normal;
   text-transform: capitalize;
-    color: #1D1D1D; /* Pastel coral color */
+    color: #1D1D1D; 
     margin-bottom: 2.3rem;
     font-optical-sizing: auto;
 
 }
 
 .pagination-button:hover {
-  color: #FF6F61; /* Add a hover effect */
+  color: #FF6F61; 
 }
 
 
 .calendar-grid {
   display: grid;
-  gap: 5px; /* Reduce gap between rows */
+  gap: 5px; 
 }
 
 .calendar-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 3px; /* Reduce gap between columns */
-  margin-bottom: 0.5rem; /* Decrease space between rows */
+  gap: 3px; 
+  margin-bottom: 0.5rem;
 }
 
 .day-column {
@@ -71,52 +79,29 @@ body{
 }
 
 .date {
-  font-size: 677rem; /* Larger font for the date */
+  font-size: 677rem;
   font-weight: bold;
-  margin: 0; /* Remove margin to reduce space */
-  padding: 0.2rem 0; /* Add a small padding */
+  margin: 0; 
+  padding: 0.2rem 0;
 }
 
 .day-name {
-  font-size: 1rem; /* Smaller font for the day */
-  margin: 0; /* Remove margin */
-  padding: 0.1rem 0; /* Add a small padding */
+  font-size: 1rem; 
+  margin: 0; 
+  padding: 0.1rem 0; 
 }
 
 .separator {
-  margin: 0; /* Remove margin */
-  padding: 0.1rem 0; /* Add minimal padding */
+  margin: 0; 
+  padding: 0.1rem 0; 
   color: #FF6F61;
 }
 
 .task-list {
-  display: grid; /* Use grid for uniformity */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ensure responsive behavior */
-  gap: 1rem; /* Space between cards */
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+  gap: 1rem; 
 }
-
-/* .task-card {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 3rem; 
-  background: #f9f9f9;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem; 
-  font-size: 0.9rem; 
-} 
-  
-
-
-.task-title {
-  font-size: 1.1rem; 
-  font-weight: bold;
-}
-
-.task-description {
-  margin: 0.3rem 0;
-}
-
-*/
 
 .task-card {
   border: 1px solid #ddd;
@@ -138,24 +123,24 @@ body{
 }
 
 .task-title {
-  font-size: 1.1rem; /* Keep this size */
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-bottom: 0.5rem; /* Ensure consistent spacing */
+  margin-bottom: 0.5rem; 
 }
 
 .task-description {
-  margin: 0.3rem 0; /* Keep reduced space between title and description */
+  margin: 0.3rem 0; 
 }
 
 
 .task-card p {
-  margin: 0; /* Remove default margins from paragraphs */
-  padding: 0.1rem 0; /* Add minimal padding */
+  margin: 0; 
+  padding: 0.1rem 0; 
 }
 
 .task-card:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Slightly larger shadow on hover */
-  transition: box-shadow 0.2s ease; /* Smooth transition */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); 
+  transition: box-shadow 0.2s ease; 
 }
 
 .getFormattedDate{
@@ -163,8 +148,8 @@ body{
 }
 
 .blur-background {
-  filter: blur(5px); /* Adjust blur intensity as needed */
-  pointer-events: none; /* Prevent interaction with the blurred content */
+  filter: blur(5px); 
+  pointer-events: none; 
 }
 
 .greeting-section {
@@ -181,4 +166,18 @@ body{
 }
 hr{
   border:0.5px  groove #ff1500;
+}
+
+
+.color-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  margin-right: 10px;
 }

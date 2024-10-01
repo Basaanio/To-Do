@@ -47,6 +47,7 @@ tasks$ = this.tasksSubject.asObservable();
     return this.http.get<Task[]>(`http://localhost:8080/tasks/user/${userId}`, { headers })
       .pipe(
         map(tasks => {
+          console.log(tasks)
           this.tasksSubject.next(tasks); // Update the BehaviorSubject
           return tasks;
         }),

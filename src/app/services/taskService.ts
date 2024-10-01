@@ -163,6 +163,7 @@ getPastDueTasks(userId: number): Observable<Task[]> {
   );
 }
 
+
 getFilteredTasks(userId: number, status: string[], priority: string[]): Observable<Task[]> {
   const statusQuery = status.join(',');
   const priorityQuery = priority.join(',');
@@ -178,6 +179,18 @@ getFilteredTasks(userId: number, status: string[], priority: string[]): Observab
       return of([]); // Return an empty array if there's an error
     })
   );
+}
+
+updateCollaboratorTaskStatus(taskId: number, collaboratorUserId: number, isCompleted: boolean): Observable<Task> {
+  return this.http.put<Task>(`${this.apiUrl}/${taskId}/complete?collaboratorUserId=${collaboratorUserId}`, { isCompleted })
+      .pipe(
+          map((response: Task) => {
+              // Here you can manipulate the response if needed
+              // For example, you can log or modify any properties if necessary
+              console.log('Task status updated:', response);
+              return response; // Return the response to be used by the caller
+          })
+      );
 }
 }
 

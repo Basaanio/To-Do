@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 * {
@@ -25,21 +26,44 @@ body, html {
     text-align: left;
     margin-left:4rem;
     padding: 10px;
-   
-   
 }
 
 h1 {
     font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 570;
-  font-size: 4.6rem;
-  font-style: normal;
-  text-transform: capitalize;
-    color: #1D1D1D; /* Pastel coral color */
+    font-optical-sizing: auto;
+    font-weight: 570;
+    font-size: 4rem;
+    font-style: normal;
+    text-transform: capitalize;
+    color: #1D1D1D;
     margin-bottom: 2.3rem;
+
+    white-space: nowrap; /* Allows wrapping */
+    overflow: hidden; /* Hides text not revealed yet */
+    display: inline-block;
+    border-right: 4px solid black; /* The blinking cursor */
+    animation: typing 8s steps(40) forwards, blink 0.35s step-end infinite;
 }
 
+/* Typing effect with more steps for smoother animation */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%; /* Reveal the entire h1 text */
+    }
+}
+
+/* Blinking cursor effect */
+@keyframes blink {
+    from {
+        border-right-color: black;
+    }
+    to {
+        border-right-color: transparent;
+    }
+}
 
 p {
     font-size: 1.2rem;
@@ -50,7 +74,7 @@ p {
 
 .btn {
     padding: 10px 20px;
-    background-color: #FF6F61; /* Same coral color */
+    background-color: #FF6F61;
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -59,14 +83,14 @@ p {
 }
 
 .btn:hover {
-    background-color: #FF4D3D; /* Darker shade for hover */
+    background-color: #FF4D3D;
 }
 
 .hero-image {
-    max-width: 50%; /* Limit width of the image area */
+    max-width: 50%;
 }
 
 .hero-image img {
-    max-width: 100%; /* Make image responsive */
-    border-radius: 15px; /* Round the corners */
+    max-width: 100%;
+    border-radius: 15px;
 }

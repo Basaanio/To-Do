@@ -1,125 +1,125 @@
 <!-- <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Edit Task</h2>
-      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label>Title</label>
-          <input formControlName="title" required />
-        </div>
-        <div>
-          <label>Description</label>
-          <textarea formControlName="description"></textarea>
-        </div>
-        <div>
-          <label>Due Date</label>
-          <input type="datetime-local" formControlName="dueDate" required />
-        </div>
-        <div>
-          <label>Priority</label>
-          <select formControlName="priority" required>
-            <option value="LOW">Low</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="HIGH">High</option>
-          </select>
-        </div>
-        <div>
-          <label>Status</label>
-          <select formControlName="status" required>
-            <option value="PENDING">Pending</option>
-            <option value="CANCELLED">Cancelled</option>
-            <option value="IN_PROGRESS">IN_PROGRESS</option>
-          </select>
-        </div>
-
-      <div *ngIf="collaboratorUsernames.length > 0">
-        <label>Collaborator Usernames</label>
-        <input type="text" [value]="collaboratorUsernames.join(', ')" />
+  <div class="modal-content">
+    <div class="TaskInfo">
+      <div class="dueDate">
+        <p><strong>Due Date:</strong> {{ task.dueDate | date: 'short' }}</p>
       </div>
-      
-        
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>
-        <button type="button" (click)="markAsDone()" class="btn btn-success">Mark as Done</button>
-      </form>
-    </div>
-  </div>
-   -->
-
-
-   <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Edit Task</h2>
-      <form class="modelform" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label>Title</label>
-          <input formControlName="title" required />
-        </div>
-        <div>
-          <label>Description</label>
-          <textarea formControlName="description"></textarea>
-        </div>
-        <div>
-          <label>Due Date</label>
-          <input type="datetime-local" formControlName="dueDate" required />
-        </div>
-        <div>
-          <label>Priority</label>
-          <select formControlName="priority" required>
-            <option value="LOW">Low</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="HIGH">High</option>
-          </select>
-        </div>
-        <div>
-          <label>Status</label>
-          <select formControlName="status" required>
-            <option value="PENDING">Pending</option>
+      <div class="StatusAndPriority">
+        <p><strong>Priority:</strong> {{ task.priority }}</p>
+        <p><strong>Status:</strong>
+          <select [(ngModel)]="task.status" class="form-control">
+            <option value="DONE">Completed</option>
             <option value="IN_PROGRESS">In Progress</option>
-            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
           </select>
-        </div>
-  
-        <div class="form-group form-check">
-          <input 
-              type="checkbox" 
-              id="addCollaborator" 
-              (change)="toggleCollaborator()" 
-              class="form-check-input" 
-              [checked]="isCollaboratorVisible" 
-          />
-          <label for="addCollaborator" class="form-check-label">Add Collaborator</label>
+        </p>
       </div>
-      <!-- Creator Field (Read-only) -->
-<div>
-  <div *ngIf="creatorUsername">
-    <p>Creator Username: {{ creatorUsername }}</p>
-  </div>
-</div>
+    </div>
+    <div class="modal-header">
+      <h5 class="modal-title">
+        <input type="text" [(ngModel)]="task.title" class="form-control" />
+      </h5>
+    </div>
+    <div class="modal-body">
+      <div class="task-details">
+        <textarea [(ngModel)]="task.description" class="form-control" rows="3"></textarea>
+      </div>
 
-<div class="checkbox-list" *ngIf="isCollaboratorVisible">
-  <h3>Select Collaborators:</h3>
-  <div *ngFor="let user of users; let i = index" class="checkbox-item">
-      <input 
-          type="checkbox" 
-          (change)="toggleCheckbox(user)" 
-          [checked]="isCollaboratorSelected(user)" 
-          id="collaborator-{{i}}" 
-      />
-      <label for="collaborator-{{i}}">{{ user.username }}</label>
-  </div>
-</div>
+      <ng-container>
+        <div class="MarkAsDoneButton">
+          <button type="button" (click)="markTaskAsCompletedForCollaborator()" class="btn btn-success">Mark as Completed</button>
 
-  
-        <div class="button-group" style="display: flex; justify-content: space-between; margin-top: 20px;">
-          <button type="submit" class="btn btn-primary">Update</button>
-          <button type="button" (click)="deleteTask()" class="btn btn-danger">Delete Task</button>
+          <button type="button" *ngIf="isTaskCreator()" (click)="deleteTask()" class="btn btn-danger">Delete</button>
+
+          <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+        </div>
+
+        <h6 *ngIf="isCollaborator()">Task Actions (As Collaborator)</h6>
+        <p *ngIf="isCollaborator()">You are collaborating on this task.</p>
+        <div class="MarkMyPartButton" *ngIf="isCollaborator()">
+          <button type="button" (click)="markTaskAsCompletedForCollaborator()" class="btn btn-primary">Mark My Part as Done</button>
+        </div>
+
+        <button type="button" (click)="updateTask()" class="btn btn-primary">Update</button>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer"></div>
+  </div>
+</div> -->
+
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h2>Edit Task</h2>
+    <form class="modelform" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Title</label>
+        <input formControlName="title" id="editTaskTitle"required />
+      </div>
+      <div>
+        <label>Description</label>
+        <textarea formControlName="description"></textarea>
+      </div>
+      <div>
+        <label>Due Date</label>
+        <input type="datetime-local" formControlName="dueDate" required />
+      </div>
+      <div>
+        <label>Priority</label>
+        <select formControlName="priority" required>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+      </div>
+      <div>
+        <label>Status</label>
+        <select formControlName="status" required>
+          <option value="PENDING">Pending</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+
+      <div class="form-group form-check">
+        <input 
+            type="checkbox" 
+            id="addCollaborator" 
+            (change)="toggleCollaborator()" 
+            class="form-check-input" 
+            [checked]="isCollaboratorVisible" 
+        />
+        <label for="addCollaborator" class="form-check-label">Add Collaborator</label>
+    </div>
+
+    <div *ngIf="creatorUsername">
+      <p>Creator Username: {{ creatorUsername }}</p>
+    </div>
+
+    <div class="checkbox-list" *ngIf="isCollaboratorVisible">
+      <h3>Select Collaborators:</h3>
+      <div *ngFor="let user of users; let i = index" class="checkbox-item">
+        <input 
+            type="checkbox" 
+            (change)="toggleCheckbox(user)" 
+            [checked]="isCollaboratorSelected(user)" 
+            id="collaborator-{{i}}" 
+        />
+        <label for="collaborator-{{i}}">{{ user.username }}</label>
+      </div>
+    </div>
+
+    <ng-container>
+      <div class="MarkAsDoneButton">
+        <div class="button-group" style="display: flex; justify-content: space-between; gap: 6px;"> 
+          <button type="button" (click)="markTaskAsCompletedForCollaborator()" class="btn btn-success">Mark as Completed</button>
+        <button type="submit" class="btn btn-primary" id="updateTaskButton">Update</button>
+          <button type="button"  (click)="deleteTask()" class="btn btn-danger" id="deleteTaskButton">Delete Task</button>
           <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </ng-container>
+    </form> 
   </div>
-  
-  
-  
-  
-  
+</div>
+

@@ -17,28 +17,36 @@
   </div>
   <hr>
 
+<div class="color-legend">
+    <div class="color-item">
+      <span class="color-box" style="background-color: #C7DBF2;"></span> 
+      <span>Collaborative Tasks</span>
+    </div>
+    <div class="color-item">
+      <span class="color-box" style="background-color: #F2DAEF;"></span> 
+      <span>Personal Tasks</span>
+    </div>
+  </div>
+
   <div class="calendar-pagination">
     <button (click)="previousPage()" class="pagination-button" [disabled]="currentPage === 1">&larr;</button> 
     <span class="month-year">{{ currentMonth }}</span>
-    <button (click)="nextPage()" class="pagination-button" [disabled]="currentPage === totalPages">&rarr;</button> 
+    <button id="nextPageButton"(click)="nextPage()" class="pagination-button" [disabled]="currentPage === totalPages">&rarr;</button> 
   </div>
 
   <div class="calendar-grid">
-    <!-- Displaying Dates -->
     <div class="calendar-row dates-row">
       <div class="day-column" *ngFor="let date of paginatedDates">
         <div class="date"><h1>{{ getFormattedDate(date) }}</h1></div>
       </div>
     </div>
     
-    <!-- Displaying Day Names -->
     <div class="calendar-row days-row">
       <div class="day-column" *ngFor="let date of paginatedDates">
         <div class="day-name">{{ getDayOfWeek(date) }}</div>
       </div>
     </div>
     
-    <!-- Separator Row -->
     <div class="calendar-row separator-row">
       <div class="day-column" *ngFor="let date of paginatedDates">
         <div class="separator">|</div>
@@ -46,20 +54,16 @@
     </div>
 
     
-    
-<!-- Displaying Tasks -->
-
 <div class="calendar-row task-data-row">
   <div class="day-column" *ngFor="let date of paginatedDates">
     <div class="task-list">
       <div class="task-card" *ngFor="let task of sortedTasks[date]" 
            (click)="openEditModal(task)"
-           [ngStyle]="{'background-color': task.isCollaborative ? '#C7DBF2' : '#F2DAEF'}"> 
+           [ngStyle]="{'background-color': task.collaboratorIds.length <= 1 ? '#F2DAEF' : '#C7DBF2'}"> 
 
-        <!-- Icon Container -->
         <div class="icon-container">
-          <i *ngIf="!task.isCollaborative" class="bi bi-person-fill" aria-hidden="true"></i> <!-- Regular Task Icon -->
-          <i *ngIf="task.isCollaborative" class="bi bi-people-fill" aria-hidden="true"></i> <!-- Collaborative Task Icon -->
+          <i *ngIf="!task.isCollaborative" class="bi bi-person-fill" aria-hidden="true"></i> 
+          <i *ngIf="task.isCollaborative" class="bi bi-people-fill" aria-hidden="true"></i> 
         </div>
  
         <span class="badge rounded-pill" 
@@ -83,29 +87,13 @@
 </div>
 
 
-    <!-- Task Form -->
-    <!-- <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded($event)"></app-task-form> -->
     <app-task-form *ngIf="isTaskFormVisible" (taskCreated)="onTaskAdded($event)" (formClosed)="closeTaskForm()"></app-task-form>
 
 
     
-    <app-task-edit-modal 
-      *ngIf="isModalOpen" 
-      [task]="selectedTask!" 
-      (close)="closeModal($event)"
-      (taskDeleted)="onTaskDeleted()">
-      <!-- //(statusChanged)="onStatusChange($event)"> -->
+    <app-task-edit-modal        *ngIf="isModalOpen"        [task]="selectedTask!"        (closeModal)="closeModal()"       (taskDeleted)="onTaskDeleted()">     
+      
     </app-task-edit-modal>
   </div>
 </div>
 </body>
-
-
-
-
-
-
-
-
-
-

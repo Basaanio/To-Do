@@ -152,7 +152,7 @@ export class TaskFormComponent implements OnInit {
 
 
 
-  onSubmit(): void {
+onSubmit(): void {
     this.submitted = true;
     this.isLoading = true; // Start loading when submitting the form
 
@@ -175,6 +175,8 @@ export class TaskFormComponent implements OnInit {
         this.taskService.createTask(taskData).subscribe(
             response => {
                 console.log("Task created successfully:", response);
+                this.toastr.success('Task created successfully!', 'Success');
+
                 this.taskForm.reset();
                 this.selectedCollaborators = [];
                 this.isCollaboratorVisible = false;

@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.info-section {  
+    display: flex;  
+    flex-direction: row;  
+    align-items: start;  
+    justify-content: space-between;  
+    padding: 5rem;  
+}  
+     
+.image-container {  
+    width: 50%;  
+    margin-right: 20px;  
+    overflow: hidden; /* Prevents overflow during animation */
+    animation: slideIn 13s ease-out forwards; /* Apply slower animation */
+}  
+     
+.image-container img {  
+    width: 100%;  
+    object-fit: cover;  
+    border-radius: 10px;  
+}  
+     
+.content-container {  
+    width: 60%; 
+    padding: 3rem; 
+}  
+     
+.content-container h2 {  
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 3.7rem;
+    font-style: normal;
+    text-transform: capitalize;
+    color: #1D1D1D; /* Pastel coral color */
+    margin-bottom: 3.5rem;
+}  
+     
+.content-container p { 
+    margin-bottom: 20px;  
+    font-size: 1.5rem;
+    width: 480px;
+}    
+
+button {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    background-color: #FF6F61; /* Same coral color */
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #FF4D3D; /* Darker shade for hover */
+}
+
+/* Keyframe animation for sliding in the image */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%); /* Start off-screen to the left */
+        opacity: 0; /* Start invisible */
+    }
+    to {
+        transform: translateX(0); /* End at original position */
+        opacity: 1; /* End fully visible */
+    }
+}
